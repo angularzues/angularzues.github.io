@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/12/17/Handler再一次回顾/index.html">
 <meta property="og:site_name" content="Angularzues">
 <meta property="og:description" content="只要是做过Android开发的，想必对Handler都不陌生。在我刚工作的时候就去看过Handler的源码，但当时局限于对多线程的理解并没有那么深刻，所以对Handler的理解也就仅仅停留在表面。现在有时间重看Handler源码，猛然发现：我擦，Handler这么简单，竟然好多面试都去问，好多人都是马马虎虎，一知半解。所以我想在这篇博客里，把Handler彻底讲透了，以后妈妈再也不用担心我对Ha">
-<meta property="og:updated_time" content="2016-12-17T17:25:07.000Z">
+<meta property="og:updated_time" content="2016-12-17T17:31:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Handler再一次回顾">
 <meta name="twitter:description" content="只要是做过Android开发的，想必对Handler都不陌生。在我刚工作的时候就去看过Handler的源码，但当时局限于对多线程的理解并没有那么深刻，所以对Handler的理解也就仅仅停留在表面。现在有时间重看Handler源码，猛然发现：我擦，Handler这么简单，竟然好多面试都去问，好多人都是马马虎虎，一知半解。所以我想在这篇博客里，把Handler彻底讲透了，以后妈妈再也不用担心我对Ha">
@@ -156,6 +156,7 @@
         <blockquote>
 <p>只要是做过Android开发的，想必对Handler都不陌生。在我刚工作的时候就去看过Handler的源码，但当时局限于对多线程的理解并没有那么深刻，所以对Handler的理解也就仅仅停留在表面。现在有时间重看Handler源码，猛然发现：我擦，Handler这么简单，竟然好多面试都去问，好多人都是马马虎虎，一知半解。所以我想在这篇博客里，把Handler彻底讲透了，以后妈妈再也不用担心我对Handler的理解了。</p>
 </blockquote>
+<a id="more"></a>
 <p>其实很多人对Handler的不理解，关键还在于对线程的不理解，所以我决定先简单说下线程的相关的知识。我在这也不能跟你胡说，在Java里一切都是对象，我们先看下Java源码里线程类的注释：</p>
 <pre><code>/**
  * A {@code Thread} is a concurrent unit of execution. It has its own call stack
@@ -738,11 +739,11 @@ public final class Looper {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">毒药</a>
+                <a href="javascript:void(0)">Android</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">Android</a>
+                <a href="javascript:void(0)">毒药</a>
               </li>
             
             <div class="clearfix"></div>
