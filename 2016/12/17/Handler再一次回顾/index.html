@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/12/17/Handler再一次回顾/index.html">
 <meta property="og:site_name" content="Angularzues">
 <meta property="og:description" content="只要是做过Android开发的，想必对Handler都不陌生。在我刚工作的时候就去看过Handler的源码，但当时局限于对多线程的理解并没有那么深刻，所以对Handler的理解也就仅仅停留在表面。现在有时间重看Handler源码，猛然发现：我擦，Handler这么简单，竟然好多面试都去问，好多人都是马马虎虎，一知半解。所以我想在这篇博客里，把Handler彻底讲透了，以后妈妈再也不用担心我对Ha">
-<meta property="og:updated_time" content="2016-12-17T17:31:23.000Z">
+<meta property="og:updated_time" content="2016-12-18T09:13:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Handler再一次回顾">
 <meta name="twitter:description" content="只要是做过Android开发的，想必对Handler都不陌生。在我刚工作的时候就去看过Handler的源码，但当时局限于对多线程的理解并没有那么深刻，所以对Handler的理解也就仅仅停留在表面。现在有时间重看Handler源码，猛然发现：我擦，Handler这么简单，竟然好多面试都去问，好多人都是马马虎虎，一知半解。所以我想在这篇博客里，把Handler彻底讲透了，以后妈妈再也不用担心我对Ha">
@@ -221,270 +221,9 @@ public void run() {
 <p>当我们点击桌面图标，桌面实际也是一个APP，上面放几个View，这些View的Image资源都是每个APP的图标，点击后就去执行的代码就是new一个进程，进程的资源什么乱七八糟的东西有一堆是根据你在APP的Manifest文件里面配置生成的。这一部分在这不讲，只需要知道，进程的必然要有一个主线程来执行APP里面写的代码吧。</p>
 <p>在这里我们不去装逼的拿源码去讲什么第一个Activity的启动，还是按照上面的一个线程创建出要执行 <em>run()</em> 肚子里的代码。假如我们在里面写怎样去加载View，怎样去绘制View，然后展示出来，再然后呢，当View也绘制好了，展示出来了，界面都呈现出来了，这时代码执行序不就结束了么，按道理APP也就关掉了啊，不可能等在那让我们点击啊。其实这就是关键了，我们要想让这个主线程不执行结束，不死掉，应该还是很好解决的。比如直接在前面代码执行完以后，View显示出来了，让主线程去执行一个Whlie（true）的循环，这时不就万事大吉了么。View显示出来，一直显示着。</p>
 <p>但是这样还有一个问题，就是主线程一直在while循环里跑，用户无法交互，主线程也无法继续执行这代码。其实这时候我们自己都能想到了，让主线程跑在while循环里，让他每次循环都去访问某个地方，看看有没有什么事要做，有就拿来做了再跑循环，没有就继续跑循环直到有事情做。其实Android整个UI机制就是这样的，装逼点说就是基于事件的机制，Windows其实也是这样的。</p>
-<p>主线程跑在一个循环里面，而这个循环就是Looper的 <em>loop()</em> 方法。是时候让主角之一登场了：（代码比较长，直接跳到后面看汉子，oh，汉字。。。）</p>
+<p>主线程跑在一个循环里面，而这个循环就是Looper的 <em>loop()</em> 方法。是时候让主角之一登场了：</p>
 </blockquote>
-<pre><code>  /**
-  * Class used to run a message loop for a thread.  Threads by default do
-  * not have a message loop associated with them; to create one, call
-  * {@link #prepare} in the thread that is to run the loop, and then
-  * {@link #loop} to have it process messages until the loop is stopped.
-  *
-  * &lt;p&gt;Most interaction with a message loop is through the
-  * {@link Handler} class.
-  *
-  * &lt;p&gt;This is a typical example of the implementation of a Looper thread,
-  * using the separation of {@link #prepare} and {@link #loop} to create an
-  * initial Handler to communicate with the Looper.
-  *
-  * &lt;pre&gt;
-  *  class LooperThread extends Thread {
-  *      public Handler mHandler;
-  *
-  *      public void run() {
-  *          Looper.prepare();
-  *
-  *          mHandler = new Handler() {
-  *              public void handleMessage(Message msg) {
-  *                  // process incoming messages here
-  *              }
-  *          };
-  *
-  *          Looper.loop();
-  *      }
-  *  }&lt;/pre&gt;
-  */
-public final class Looper {
-    /*
-     * API Implementation Note:
-     *
-     * This class contains the code required to set up and manage an event loop
-     * based on MessageQueue.  APIs that affect the state of the queue should be
-     * defined on MessageQueue or Handler rather than on Looper itself.  For example,
-     * idle handlers and sync barriers are defined on the queue whereas preparing the
-     * thread, looping, and quitting are defined on the looper.
-     */
-
-    private static final String TAG = &quot;Looper&quot;;
-
-    // sThreadLocal.get() will return null unless you&apos;ve called prepare().
-    static final ThreadLocal&lt;Looper&gt; sThreadLocal = new ThreadLocal&lt;Looper&gt;();
-    private static Looper sMainLooper;  // guarded by Looper.class
-
-    final MessageQueue mQueue;
-    final Thread mThread;
-
-    private Printer mLogging;
-
-     /** Initialize the current thread as a looper.
-      * This gives you a chance to create handlers that then reference
-      * this looper, before actually starting the loop. Be sure to call
-      * {@link #loop()} after calling this method, and end it by calling
-      * {@link #quit()}.
-      */
-    public static void prepare() {
-        prepare(true);
-    }
-
-    private static void prepare(boolean quitAllowed) {
-        if (sThreadLocal.get() != null) {
-            throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);
-        }
-        sThreadLocal.set(new Looper(quitAllowed));
-    }
-
-    /**
-     * Initialize the current thread as a looper, marking it as an
-     * application&apos;s main looper. The main looper for your application
-     * is created by the Android environment, so you should never need
-     * to call this function yourself.  See also: {@link #prepare()}
-     */
-    public static void prepareMainLooper() {
-        prepare(false);
-        synchronized (Looper.class) {
-            if (sMainLooper != null) {
-                throw new IllegalStateException(&quot;The main Looper has already been prepared.&quot;);
-            }
-            sMainLooper = myLooper();
-        }
-    }
-
-    /**
-     * Returns the application&apos;s main looper, which lives in the main thread of the application.
-     */
-    public static Looper getMainLooper() {
-        synchronized (Looper.class) {
-            return sMainLooper;
-        }
-    }
-
-    /**
-     * Run the message queue in this thread. Be sure to call
-     * {@link #quit()} to end the loop.
-     */
-    public static void loop() {
-        final Looper me = myLooper();
-        if (me == null) {
-            throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn&apos;t called on this thread.&quot;);
-        }
-        final MessageQueue queue = me.mQueue;
-
-        // Make sure the identity of this thread is that of the local process,
-        // and keep track of what that identity token actually is.
-        Binder.clearCallingIdentity();
-        final long ident = Binder.clearCallingIdentity();
-
-        for (;;) {
-            Message msg = queue.next(); // might block
-            if (msg == null) {
-                // No message indicates that the message queue is quitting.
-                return;
-            }
-
-            // This must be in a local variable, in case a UI event sets the logger
-            Printer logging = me.mLogging;
-            if (logging != null) {
-                logging.println(&quot;&gt;&gt;&gt;&gt;&gt; Dispatching to &quot; + msg.target + &quot; &quot; +
-                        msg.callback + &quot;: &quot; + msg.what);
-            }
-
-            msg.target.dispatchMessage(msg);
-
-            if (logging != null) {
-                logging.println(&quot;&lt;&lt;&lt;&lt;&lt; Finished to &quot; + msg.target + &quot; &quot; + msg.callback);
-            }
-
-            // Make sure that during the course of dispatching the
-            // identity of the thread wasn&apos;t corrupted.
-            final long newIdent = Binder.clearCallingIdentity();
-            if (ident != newIdent) {
-                Log.wtf(TAG, &quot;Thread identity changed from 0x&quot;
-                        + Long.toHexString(ident) + &quot; to 0x&quot;
-                        + Long.toHexString(newIdent) + &quot; while dispatching to &quot;
-                        + msg.target.getClass().getName() + &quot; &quot;
-                        + msg.callback + &quot; what=&quot; + msg.what);
-            }
-
-            msg.recycleUnchecked();
-        }
-    }
-
-    /**
-     * Return the Looper object associated with the current thread.  Returns
-     * null if the calling thread is not associated with a Looper.
-     */
-    public static @Nullable Looper myLooper() {
-        return sThreadLocal.get();
-    }
-
-    /**
-     * Return the {@link MessageQueue} object associated with the current
-     * thread.  This must be called from a thread running a Looper, or a
-     * NullPointerException will be thrown.
-     */
-    public static @NonNull MessageQueue myQueue() {
-        return myLooper().mQueue;
-    }
-
-    private Looper(boolean quitAllowed) {
-        mQueue = new MessageQueue(quitAllowed);
-        mThread = Thread.currentThread();
-    }
-
-    /**
-     * Returns true if the current thread is this looper&apos;s thread.
-     */
-    public boolean isCurrentThread() {
-        return Thread.currentThread() == mThread;
-    }
-
-    /**
-     * Control logging of messages as they are processed by this Looper.  If
-     * enabled, a log message will be written to &lt;var&gt;printer&lt;/var&gt;
-     * at the beginning and ending of each message dispatch, identifying the
-     * target Handler and message contents.
-     *
-     * @param printer A Printer object that will receive log messages, or
-     * null to disable message logging.
-     */
-    public void setMessageLogging(@Nullable Printer printer) {
-        mLogging = printer;
-    }
-
-    /**
-     * Quits the looper.
-     * &lt;p&gt;
-     * Causes the {@link #loop} method to terminate without processing any
-     * more messages in the message queue.
-     * &lt;/p&gt;&lt;p&gt;
-     * Any attempt to post messages to the queue after the looper is asked to quit will fail.
-     * For example, the {@link Handler#sendMessage(Message)} method will return false.
-     * &lt;/p&gt;&lt;p class=&quot;note&quot;&gt;
-     * Using this method may be unsafe because some messages may not be delivered
-     * before the looper terminates.  Consider using {@link #quitSafely} instead to ensure
-     * that all pending work is completed in an orderly manner.
-     * &lt;/p&gt;
-     *
-     * @see #quitSafely
-     */
-    public void quit() {
-        mQueue.quit(false);
-    }
-
-    /**
-     * Quits the looper safely.
-     * &lt;p&gt;
-     * Causes the {@link #loop} method to terminate as soon as all remaining messages
-     * in the message queue that are already due to be delivered have been handled.
-     * However pending delayed messages with due times in the future will not be
-     * delivered before the loop terminates.
-     * &lt;/p&gt;&lt;p&gt;
-     * Any attempt to post messages to the queue after the looper is asked to quit will fail.
-     * For example, the {@link Handler#sendMessage(Message)} method will return false.
-     * &lt;/p&gt;
-     */
-    public void quitSafely() {
-        mQueue.quit(true);
-    }
-
-    /**
-     * Gets the Thread associated with this Looper.
-     *
-     * @return The looper&apos;s thread.
-     */
-    public @NonNull Thread getThread() {
-        return mThread;
-    }
-
-    /**
-     * Gets this looper&apos;s message queue.
-     *
-     * @return The looper&apos;s message queue.
-     */
-    public @NonNull MessageQueue getQueue() {
-        return mQueue;
-    }
-
-    /**
-     * Dumps the state of the looper for debugging purposes.
-     *
-     * @param pw A printer to receive the contents of the dump.
-     * @param prefix A prefix to prepend to each line which is printed.
-     */
-    public void dump(@NonNull Printer pw, @NonNull String prefix) {
-        pw.println(prefix + toString());
-        mQueue.dump(pw, prefix + &quot;  &quot;);
-    }
-
-    @Override
-    public String toString() {
-        return &quot;Looper (&quot; + mThread.getName() + &quot;, tid &quot; + mThread.getId()
-                + &quot;) {&quot; + Integer.toHexString(System.identityHashCode(this)) + &quot;}&quot;;
-    }
-}
-</code></pre><blockquote>
-<p>我想了半天，最终还是将Looper完整的源码双手奉上，虽然它在博客里面比较长，但作为一个众所周知的类，它代码还是少的可怜，加上完整的导入包和注释，才区区281行。如果没被源码恶心到，就继续往下看。</p>
-</blockquote>
-<p>说实话Looper的源码加注释真的写的相当清楚明白，我们直接看最前面关于Looper的注释，我把它再抄一遍，以便于查看和分析：</p>
+<p>说实话Looper的源码加注释真的写的相当清楚明白，而且代码量极少，我们直接看最前面关于Looper的注释：</p>
 <pre><code>/**
   * Class used to run a message loop for a thread.  Threads by default do
   * not have a message loop associated with them; to create one, call
@@ -515,9 +254,55 @@ public final class Looper {
   *      }
   *  }&lt;/pre&gt;
   */
-</code></pre><p>最前面很显的写着这个类一般用于让线程去做一个消息的循环，线程里面本来是没有一个消息循环和线程相关联的。如果要创建一个有loop循环的线程，就要在线程的run方法里去调执行loop，让它再loop的过程中去处理消息。怎么样，和我前面讲的基本一样，我以宋吉吉的人格发誓，我之前没仔细看过这段注释，果然英雄所见略同。然后，他又写了个例子，教你怎样写一个有Looper的线程。抬眼一瞅，这不就是在run方法的肚子里执行 <em>Looer.loop()</em> 么。。。</p>
+</code></pre><p>最前面很显的写着：Looper这个类一般用于让线程去做一个消息的循环，线程里面本来是没有一个消息循环和线程相关联的。如果要创建一个有loop循环的线程，就要在线程的run方法里去调执行loop，让它在loop的过程中去处理消息。怎么样，和我前面讲的基本一样，我以宋吉吉的人格发誓，我之前没仔细看过这段注释，果然英雄所见略同。然后，注释又写了个例子，教你怎样写一个有Looper的线程。抬眼一瞅，这不就是在run方法的肚子里执行 <em>Looer.loop()</em> 么。。。</p>
 <p>根据我们上面讲的线程的原理，即使不看这个 <em>loop()</em> 方法，先来猜一发，看看它里面会怎么写，无非是一个 <em>while（ture)</em> 循环，然后在里面每次有一个去消息，把消息里的代码执行的操作，好，上源码，接下来就是见证奇迹的时刻：</p>
-<p>额额，好像上面已经有Looper的源码了，不抄了，博客字数凑的差不多了。直接翻到上面一看，<em>loop()</em> 方法先是。。。日，竟然是个 <em>for(;;)</em> ,啪啪，这个不算打脸吧，和<em>while(true)</em> 一样嘛。继续看for循环里面的代码：</p>
+<pre><code> public static void loop() {
+    final Looper me = myLooper();
+    if (me == null) {
+        throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn&apos;t called on this thread.&quot;);
+    }
+    final MessageQueue queue = me.mQueue;
+
+    // Make sure the identity of this thread is that of the local process,
+    // and keep track of what that identity token actually is.
+    Binder.clearCallingIdentity();
+    final long ident = Binder.clearCallingIdentity();
+
+    for (;;) {
+        Message msg = queue.next(); // might block
+        if (msg == null) {
+            // No message indicates that the message queue is quitting.
+            return;
+        }
+
+        // This must be in a local variable, in case a UI event sets the logger
+        Printer logging = me.mLogging;
+        if (logging != null) {
+            logging.println(&quot;&gt;&gt;&gt;&gt;&gt; Dispatching to &quot; + msg.target + &quot; &quot; +
+                    msg.callback + &quot;: &quot; + msg.what);
+        }
+
+        msg.target.dispatchMessage(msg);
+
+        if (logging != null) {
+            logging.println(&quot;&lt;&lt;&lt;&lt;&lt; Finished to &quot; + msg.target + &quot; &quot; + msg.callback);
+        }
+
+        // Make sure that during the course of dispatching the
+        // identity of the thread wasn&apos;t corrupted.
+        final long newIdent = Binder.clearCallingIdentity();
+        if (ident != newIdent) {
+            Log.wtf(TAG, &quot;Thread identity changed from 0x&quot;
+                    + Long.toHexString(ident) + &quot; to 0x&quot;
+                    + Long.toHexString(newIdent) + &quot; while dispatching to &quot;
+                    + msg.target.getClass().getName() + &quot; &quot;
+                    + msg.callback + &quot; what=&quot; + msg.what);
+        }
+
+        msg.recycleUnchecked();
+    }
+}
+</code></pre><p>额额，<em>loop()</em> 方法是。。。日，竟然是个 <em>for(;;)</em> ,啪啪，这个不算打脸吧，和<em>while(true)</em> 一样嘛。继续看for循环里面的代码：</p>
 <pre><code>Message msg = queue.next();
 </code></pre><p>这行就是从MessageQueue里面取一个Message，也就是从消息队列里取一个消息。如果消息是null，就丢弃掉，然后接下来自然不出我们所料要处理消息了：</p>
 <pre><code>msg.target.dispatchMessage(msg);
