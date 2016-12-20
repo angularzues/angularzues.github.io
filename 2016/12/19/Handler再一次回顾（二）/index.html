@@ -18,7 +18,7 @@
 <meta property="og:description" content="在Handler再一次回顾里，我主要讲到了主线程在Looper的loop里循环读取消息，然后处理消息的过程，并没有说明这个消息是怎样发送的。这一篇我准备继续顺着线程执行的顺序来一步步看，怎样从发送消息到处理一个消息，以及消息究竟是个什么东西。
 
 在接着上一篇思路往下走之前，先说一点关于进程和APP的东西。多进程的东西在此不涉及，默认我们的APP只有一个进程，当点击APP图标，需要启动一个APP时">
-<meta property="og:updated_time" content="2016-12-20T09:57:29.000Z">
+<meta property="og:updated_time" content="2016-12-20T09:59:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Handler再一次回顾（二）">
 <meta name="twitter:description" content="在Handler再一次回顾里，我主要讲到了主线程在Looper的loop里循环读取消息，然后处理消息的过程，并没有说明这个消息是怎样发送的。这一篇我准备继续顺着线程执行的顺序来一步步看，怎样从发送消息到处理一个消息，以及消息究竟是个什么东西。
@@ -163,6 +163,7 @@
 <p>在Handler再一次回顾里，我主要讲到了主线程在Looper的loop里循环读取消息，然后处理消息的过程，并没有说明这个消息是怎样发送的。这一篇我准备继续顺着线程执行的顺序来一步步看，怎样从发送消息到处理一个消息，以及消息究竟是个什么东西。</p>
 </blockquote>
 <p>在接着上一篇思路往下走之前，先说一点关于进程和APP的东西。多进程的东西在此不涉及，默认我们的APP只有一个进程，当点击APP图标，需要启动一个APP时，系统为我们用孵化出一个新进程，用来执行这个APP的代码。这个新进程里面的有个线程，就是我们的主线程，同时这个主线程和其他线程的区别就是有一个Looper和MessageQueue。简单来说就是：点击APP图标后系统为我们做的事就是孵化出一个进程，进程里有一个主线程，主线程里面有个Looper，MessageQueue，然后让执行到Looper的loop循环里。这个时候主线程就在这个loop里面跑循环，每次去取消息来处理了。</p>
+<a id="more"></a>
 <p>然后我们再想一个问题，既然主线程都在跑圈圈了，我们怎么让主线程去显示界面呢，Activity在哪创建呢，又是如何执行到Activity的 <em>onCreate()</em> 方法的呢？其实这个问题的答案很好想到，只要给主线程的MessageQueue发消息，就可以了。而系统也正是这样做的， <em>onCreate()</em> 是由系统给主线程发消息到主线程的MessageQueue中，当loop循环取到这个消息的时候，处理消息也就是执行 <em>onCreate()</em> 肚子里的代码。从loop循环里面到 <em>onCreate()</em> 肚子里面代码的执行过程跟上篇讲的执行Handler的 <em>handleMesaage()</em>  方法的是一样的。</p>
 <blockquote>
 <p>从上一篇到现在，基本上基于事件的线程的窗口机制的模型已经说清楚了。只剩下具体每一部分的细节了，比如具体怎样发消息，发到哪，取消息，从哪取，怎样取？针对这些细节，我们再根据源码，进行细致的说明。</p>
