@@ -6,16 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Angularzues</title>
+  <title>GC机制梳理 | Angularzues</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="为曾经吹过的牛皮。。。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Angularzues">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GC机制梳理">
+<meta property="og:url" content="http://yoursite.com/2017/01/22/GC机制梳理/index.html">
 <meta property="og:site_name" content="Angularzues">
 <meta property="og:description" content="为曾经吹过的牛皮。。。">
+<meta property="og:updated_time" content="2017-01-22T08:25:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Angularzues">
+<meta name="twitter:title" content="GC机制梳理">
 <meta name="twitter:description" content="为曾经吹过的牛皮。。。">
   
     <link rel="alternative" href="/atom.xml" title="Angularzues" type="application/atom+xml">
@@ -134,16 +135,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="java-GC机制梳理" class="article article-type-java  article-index" itemscope itemprop="blogPost">
+            <article id="java-GC机制梳理" class="article article-type-java " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/22/GC机制梳理/">GC机制梳理</a>
+    <h1 class="article-title" itemprop="name">
+      GC机制梳理
     </h1>
   
 
@@ -158,53 +157,26 @@
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/22/GC机制梳理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Android开发中要打交道的那些Json" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/22/Android开发中要打交道的那些Json/">Android开发中要打交道的那些Json</a>
-    </h1>
-  
-
-        <a href="/2017/01/22/Android开发中要打交道的那些Json/" class="archive-article-date">
-  	<time datetime="2017-01-22T08:24:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-22</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -213,291 +185,102 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/22/Android开发中要打交道的那些Json/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/01/22/GC机制梳理/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
 
-
-
-
-
-
-
-
   
-    <article id="post-View和ViewGroup事件处理机制梳理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/22/View和ViewGroup事件处理机制梳理/">View和ViewGroup事件处理机制梳理</a>
-    </h1>
-  
-
-        <a href="/2017/01/22/View和ViewGroup事件处理机制梳理/" class="archive-article-date">
-  	<time datetime="2017-01-22T08:23:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-22</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/22/View和ViewGroup事件处理机制梳理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Android程序猿应该了解的Http请求" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/22/Android程序猿应该了解的Http请求/">Android程序猿应该了解的Http请求</a>
-    </h1>
-  
-
-        <a href="/2017/01/22/Android程序猿应该了解的Http请求/" class="archive-article-date">
-  	<time datetime="2017-01-22T08:21:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-22</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/22/Android程序猿应该了解的Http请求/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-不开玩笑，我只想认真谈技术" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/22/不开玩笑，我只想认真谈技术/">不开玩笑，我只想认真谈技术</a>
-    </h1>
-  
-
-        <a href="/2017/01/22/不开玩笑，我只想认真谈技术/" class="archive-article-date">
-  	<time datetime="2017-01-22T08:21:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-22</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目告一段落，突然放松下来，又感觉有些迷茫了。可能这就是人的通病吧，看看博客，想想明年的规划，总觉得自己没有足够的努力。不是什么鸡汤，也总觉得自己能够做到更好。</p>
-<p>可能接触的时间不够吧，想想自己肚里的那点墨水总是发虚，一个连c++都没有敲过一行的人，底层的JNI都看不懂怎么能说自己会编程呢？虽然从职业发展角度上来说，如果你在某个小领域特别精通，可能会收获更多的财富和声望，但是总觉得这些不是自己真正想要的。打心底里还是有一种求知<br>
-        
-          <a class="article-more-a" href="/2017/01/22/不开玩笑，我只想认真谈技术/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/22/不开玩笑，我只想认真谈技术/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Handler再一次回顾（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/19/Handler再一次回顾（二）/">Handler再一次回顾（二）</a>
-    </h1>
-  
-
-        <a href="/2016/12/19/Handler再一次回顾（二）/" class="archive-article-date">
-  	<time datetime="2016-12-19T09:38:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-19</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>在Handler再一次回顾里，我主要讲到了主线程在Looper的loop里循环读取消息，然后处理消息的过程，并没有说明这个消息是怎样发送的。这一篇我准备继续顺着线程执行的顺序来一步步看，怎样从发送消息到处理一个消息，以及消息究竟是个什么东西。</p>
-</blockquote>
-<p>在接着上一篇思路往下走之前，先说一点关于进程和APP的东西。多进程的东西在此不涉及，默认我们的APP只有一个进程，当点击APP图标，需要启动一个APP时，系统为我们用孵化出一个新进程，用来执行这个APP的代码。这个新进程里面的有个线程，就是我们的主线程，同时这个主线程和其他线程的区别就是有一个Looper和MessageQueue。简单来说就是：点击APP图标后系统为我们做的事就是孵化出一个进程，进程里有一个主线程，主线程里面有个Looper，MessageQueue，然后让执行到Looper的loop循环里。这个时候主线程就在这个loop里面跑循环，每次去取消息来处理了。</p>
-        
-          <a class="article-more-a" href="/2016/12/19/Handler再一次回顾（二）/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/19/Handler再一次回顾（二）/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-Handler再一次回顾" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/17/Handler再一次回顾/">Handler再一次回顾</a>
-    </h1>
-  
-
-        <a href="/2016/12/17/Handler再一次回顾/" class="archive-article-date">
-  	<time datetime="2016-12-17T11:19:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-17</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>只要是做过Android开发的，想必对Handler都不陌生。在我刚工作的时候就去看过Handler的源码，但当时局限于对多线程的理解并没有那么深刻，所以对Handler的理解也就仅仅停留在表面。现在有时间重看Handler源码，猛然发现：我擦，Handler这么简单，竟然好多面试都去问，好多人都是马马虎虎，一知半解。所以我想在这篇博客里，把Handler彻底讲透了，以后妈妈再也不用担心我对Handler的理解了。</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2016/12/17/Handler再一次回顾/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/17/Handler再一次回顾/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
+<nav id="article-nav">
   
   
+    <a href="/2017/01/22/Android开发中要打交道的那些Json/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android开发中要打交道的那些Json</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key=" 2017/01/22/GC机制梳理/" data-title="GC机制梳理" data-url="http://yoursite.com/2017/01/22/GC机制梳理/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"angularzues"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+</div>
+
+
+
 
 
           </div>
@@ -519,8 +302,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
