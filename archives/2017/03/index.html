@@ -6,24 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Android程序猿应该了解的Http请求 | Angularzues</title>
+  <title>Archives: 2017/3 | Angularzues</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
-
-首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android程序猿应该了解的Http请求">
-<meta property="og:url" content="http://yoursite.com/2017/01/22/Android程序猿应该了解的Http请求/index.html">
+  <meta name="description" content="为曾经吹过的牛皮。。。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Angularzues">
+<meta property="og:url" content="http://yoursite.com/archives/2017/03/index.html">
 <meta property="og:site_name" content="Angularzues">
-<meta property="og:description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
-
-首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
-<meta property="og:updated_time" content="2017-02-28T17:52:26.000Z">
+<meta property="og:description" content="为曾经吹过的牛皮。。。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android程序猿应该了解的Http请求">
-<meta name="twitter:description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
-
-首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
+<meta name="twitter:title" content="Angularzues">
+<meta name="twitter:description" content="为曾经吹过的牛皮。。。">
   
     <link rel="alternative" href="/atom.xml" title="Angularzues" type="application/atom+xml">
   
@@ -141,167 +134,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Android程序猿应该了解的Http请求" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Android程序猿应该了解的Http请求
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/01/浅谈Http/" class="archive-article-date">
+  	<time datetime="2017-02-28T18:05:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/浅谈Http/">浅谈Http</a>
     </h1>
   
 
-        <a href="/2017/01/22/Android程序猿应该了解的Http请求/" class="archive-article-date">
-  	<time datetime="2017-01-22T08:21:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-22</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。</p>
-</blockquote>
-<p>首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输的约定，无非是比着0或1的编码更抽象罢了。我们要理解Http协议，首先要明白我们能用Http协议做什么，然后是哪些东西是Http这一层做的事。其实我一直觉的真正不容易懂的是http协议这一层到底包括哪些东西，什么get，post，head方法，无非就是一个规则，当我们知道http是什么之后，这些规则都简单的一笔。。。（我只写自己的理解，语言也没那么严密，感性认知，不喜勿喷）</p>
-<p>其实就像手机一样，我们可以用手机打电话，发短信，只要知道对方的号码，会拨号，或者编辑，然后打电话要打开拨号的软件，发短信要打开短信软件进行编辑。可以把Http协议的接口就抽象为一个手机，至于怎么发出去的，怎么听到声音的，怎么连接上的，这些不用我们管，在http这一层也无需理解。这样来看http，其实也就很简单了。既然我们用http来进行客户端和服务器的交互，就自然可以想到，我们是和服务器进行交换数据的。比如我要注册，必然要把注册的账号告诉服务器，让它存起来，它验证后觉得，符合注册要求，然后返回一个信息，说成功了，然后客户端再进行其他的操作。这样的信息交互无非就四种嘛，增删改查。</p>
-<p>同时我们来看http协议的各种请求，最常用的就是get方法和post方法了，为什么这两个最常用？因为get是对应数据的查，C／S模式下这种查不难理解吧，比如新闻客户端，一个页面那么多条新闻肯定要从服务器查询啊。每次刷新的时候去查一下服务器，然后服务器把结果取出来呈现在客户端界面上。post就对应是改数据的方法，客户端一般采集数据，更新服务端数据就用post方法。我觉得这样讲get和post的方法比说什么带不带body，格式什么的好理解吧。自然你想嘛，如果我要查，用get方法，只要知道路径就可以了，我自然就可以查到了，要post，改数据，总要知道你要改的字段是什么，你要更改为什么数据。所以post要放参数也就是这个原因了，就这么简单，我不知道为什么那些讲http请求的为什么老是搬书，上来就是定义，每次学一个新东西都很费劲。我觉得有这个理解，后面每一块是干嘛的其实很好理解的。</p>
+        <div class="article-info info-on-right">
+          
+          
 
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
         </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/01/22/Android程序猿应该了解的Http请求/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/01/22/View和ViewGroup事件处理机制梳理/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          View和ViewGroup事件处理机制梳理
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/01/22/不开玩笑，我只想认真谈技术/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">不开玩笑，我只想认真谈技术</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
-</nav>
 
-
-
-
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key=" 2017/01/22/Android程序猿应该了解的Http请求/" data-title="Android程序猿应该了解的Http请求" data-url="http://yoursite.com/2017/01/22/Android程序猿应该了解的Http请求/"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"angularzues"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
-
-</div>
-
-
-
+    
 
 
           </div>
@@ -324,8 +199,8 @@ var duoshuoQuery = {short_name:"angularzues"};
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

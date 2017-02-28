@@ -6,18 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>GC机制梳理 | Angularzues</title>
+  <title>浅谈Http | Angularzues</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="为曾经吹过的牛皮。。。">
+  <meta name="description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
+
+首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GC机制梳理">
-<meta property="og:url" content="http://yoursite.com/2017/01/22/GC机制梳理/index.html">
+<meta property="og:title" content="浅谈Http">
+<meta property="og:url" content="http://yoursite.com/2017/03/01/浅谈Http/index.html">
 <meta property="og:site_name" content="Angularzues">
-<meta property="og:description" content="为曾经吹过的牛皮。。。">
-<meta property="og:updated_time" content="2017-01-22T08:25:41.000Z">
+<meta property="og:description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
+
+首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
+<meta property="og:updated_time" content="2017-02-28T18:06:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GC机制梳理">
-<meta name="twitter:description" content="为曾经吹过的牛皮。。。">
+<meta name="twitter:title" content="浅谈Http">
+<meta name="twitter:description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
+
+首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
   
     <link rel="alternative" href="/atom.xml" title="Angularzues" type="application/atom+xml">
   
@@ -135,25 +141,31 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="java-GC机制梳理" class="article article-type-java " itemscope itemprop="blogPost">
+            <article id="post-浅谈Http" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      GC机制梳理
+      浅谈Http
     </h1>
   
 
-        <a href="/2017/01/22/GC机制梳理/" class="archive-article-date">
-  	<time datetime="2017-01-22T08:25:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-22</time>
+        <a href="/2017/03/01/浅谈Http/" class="archive-article-date">
+  	<time datetime="2017-02-28T18:05:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <blockquote>
+<p>在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。</p>
+</blockquote>
+<p>首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输的约定，无非是比着0或1的编码更抽象罢了。我们要理解Http协议，首先要明白我们能用Http协议做什么，然后是哪些东西是Http这一层做的事。其实我一直觉的真正不容易懂的是http协议这一层到底包括哪些东西，什么get，post，head方法，无非就是一个规则，当我们知道http是什么之后，这些规则都简单的一笔。。。（我只写自己的理解，语言也没那么严密，感性认知，不喜勿喷）</p>
+<p>其实就像手机一样，我们可以用手机打电话，发短信，只要知道对方的号码，会拨号，或者编辑，然后打电话要打开拨号的软件，发短信要打开短信软件进行编辑。可以把Http协议的接口就抽象为一个手机，至于怎么发出去的，怎么听到声音的，怎么连接上的，这些不用我们管，在http这一层也无需理解。这样来看http，其实也就很简单了。既然我们用http来进行客户端和服务器的交互，就自然可以想到，我们是和服务器进行交换数据的。比如我要注册，必然要把注册的账号告诉服务器，让它存起来，它验证后觉得，符合注册要求，然后返回一个信息，说成功了，然后客户端再进行其他的操作。这样的信息交互无非就四种嘛，增删改查。</p>
+<p>同时我们来看http协议的各种请求，最常用的就是get方法和post方法了，为什么这两个最常用？因为get是对应数据的查，C／S模式下这种查不难理解吧，比如新闻客户端，一个页面那么多条新闻肯定要从服务器查询啊。每次刷新的时候去查一下服务器，然后服务器把结果取出来呈现在客户端界面上。post就对应是改数据的方法，客户端一般采集数据，更新服务端数据就用post方法。我觉得这样讲get和post的方法比说什么带不带body，格式什么的好理解吧。自然你想嘛，如果我要查，用get方法，只要知道路径就可以了，我自然就可以查到了，要post，改数据，总要知道你要改的字段是什么，你要更改为什么数据。所以post要放参数也就是这个原因了，就这么简单，我不知道为什么那些讲http请求的为什么老是搬书，上来就是定义，每次学一个新东西都很费劲。我觉得有这个理解，后面每一块是干嘛的其实很好理解的。</p>
+
       
 
       
@@ -232,7 +244,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/01/22/GC机制梳理/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/03/01/浅谈Http/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -246,18 +258,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/03/01/浅谈Http/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          浅谈Http
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/01/22/Android开发中要打交道的那些Json/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android开发中要打交道的那些Json</div>
+    <a href="/2017/01/22/GC机制梳理/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">GC机制梳理</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -270,7 +273,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key=" 2017/01/22/GC机制梳理/" data-title="GC机制梳理" data-url="http://yoursite.com/2017/01/22/GC机制梳理/"></div>
+	<div class="ds-thread" data-thread-key=" 2017/03/01/浅谈Http/" data-title="浅谈Http" data-url="http://yoursite.com/2017/03/01/浅谈Http/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
