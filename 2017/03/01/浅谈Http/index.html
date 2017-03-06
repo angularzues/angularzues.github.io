@@ -20,7 +20,7 @@
 首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
 <meta property="og:image" content="https://ww2.sinaimg.cn/large/006tKfTcly1fdd1ry6v9tj30gi06gq57.jpg">
 <meta property="og:image" content="https://ww3.sinaimg.cn/large/006tKfTcly1fdd2egaq8qj30gg06fgm6.jpg">
-<meta property="og:updated_time" content="2017-03-06T06:17:58.000Z">
+<meta property="og:updated_time" content="2017-03-06T06:21:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈Http">
 <meta name="twitter:description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
@@ -204,8 +204,8 @@
 <blockquote>
 <p>http提供这几个方法给我们用，为了灵活性考虑，这些方法必然可以有各种各样的配置来应对各种不同的需求，不然http协议早就被淘汰了。比如有人想用json字符串传递参数和返回，有人想数据压缩传输，这些自然是应该被满足的。因为是约定，你怎样传输的，数据是什么格式，肯定要有个地方来说明。</p>
 </blockquote>
-<p>###报文结构</p>
-<p>####请求报文</p>
+<p>##报文结构</p>
+<p>###请求报文</p>
 <p>http中这些配置的说明都集中在头部，就是header，header里面包含了各种对本次http请求的配置，而一般http类的框架，多采用build模式来构建一个http请求，也正是因为http 请求的这么多配置，用build模式就比较方便，xxxBuilder.xx().xx().build。类似这种，就是一个个在配置相关的参数。其实这些配置无非是最后填在http协议的报文里面，作为一种标识，我们先来看http请求报文的结构。</p>
 <p><img src="https://ww2.sinaimg.cn/large/006tKfTcly1fdd1ry6v9tj30gi06gq57.jpg" alt="image"></p>
 <p>请求行：请求行由方法字段、URL 字段 和HTTP 协议版本字段 3 个部分组成，他们之间使用空格隔开。</p>
@@ -277,7 +277,7 @@
 </tbody>
 </table>
 <p>上面的表格就是http对应增删改查的四种方法是否有body，是否是数据安全的说明。（http还有其他的方法，在此不再列举，Android开发一般用不到）此处的数据安全是指是否对服务端数据有影响，不是指传输过程中的安全性。也很好理解只有get方法对应查数据不会影响原数据，属于只读操作所以get操作对数据来说是安全的。其他的增删改，都会影响，有写数据的操作，所以是对服务端数据不安全的。对于哪个请求有body，哪个没有body应该也很好理解，增和改，都要有自己的数据内容上传，此处是有body设计更合理，而删和查，只需知道具体位置，具体字段即可，所以无需再用请求body，所以设计为无请求body。</p>
-<p>####响应报文</p>
+<p>###响应报文</p>
 <p>整个http请求的报文结构也就是这样了，其实响应报文和请求报文并没有太大的区别：</p>
 <p><img src="https://ww3.sinaimg.cn/large/006tKfTcly1fdd2egaq8qj30gg06fgm6.jpg" alt=""></p>
 <p>响应报文的第一行叫状态行，这里面最重要的也就是状态码了。比如200，404等。这个状态码标志着这次请求是一个什么样的结果，就好像打电话，有正常接通，有暂时不在服务区，有您拨打的电话已停机等，这个状态码就是这么个意思，下面是状态码的具体定义：</p>
@@ -289,21 +289,30 @@
 </li>
 <li><p>3xx：表示服务器要求客户端重定向;</p>
 </li>
-<li>4xx：表示客户端的请求有非法内容;</li>
-<li>5xx：表示服务器未能正常处理客户端的请求而出现意外错误;
-　　</li>
+<li><p>4xx：表示客户端的请求有非法内容;</p>
+</li>
+<li><p>5xx：表示服务器未能正常处理客户端的请求而出现意外错误;
+　　</p>
+</li>
 </ul>
-<p>#####状态码描述文本有如下取值：</p>
+<blockquote>
+<p>状态码描述文本有如下取值：</p>
+</blockquote>
 <ul>
 <li><p>200 OK： 表示客户端请求成功;</p>
 </li>
 <li><p>400 Bad Request： 表示客户端请求有语法错误，不能被服务器所理解;</p>
 </li>
-<li>401 Unauthonzed： 表示请求未经授权，该状态代码必须与 WWW-Authenticate 报头域一起使用;</li>
-<li>403 Forbidden： 表示服务器收到请求，但是拒绝提供服务，通常会在响应正文中给出不提供服务的原因;</li>
-<li>404 Not Found： 请求的资源不存在，例如，输入了错误的URL;</li>
-<li>500 Internal Server Error： 表示服务器发生不可预期的错误，导致无法完成客户端的请求</li>
-<li>503 Service Unavailable： 表示服务器当前不能够处理客户端的请求，在一段时间之后，服务器可能会恢复正常;</li>
+<li><p>401 Unauthonzed： 表示请求未经授权，该状态代码必须与 WWW-Authenticate 报头域一起使用;</p>
+</li>
+<li><p>403 Forbidden： 表示服务器收到请求，但是拒绝提供服务，通常会在响应正文中给出不提供服务的原因;</p>
+</li>
+<li><p>404 Not Found： 请求的资源不存在，例如，输入了错误的URL;</p>
+</li>
+<li><p>500 Internal Server Error： 表示服务器发生不可预期的错误，导致无法完成客户端的请求</p>
+</li>
+<li><p>503 Service Unavailable： 表示服务器当前不能够处理客户端的请求，在一段时间之后，服务器可能会恢复正常;</p>
+</li>
 </ul>
 <blockquote>
 <p>剩下的部分响应报文和请求报文结构基本一样，剩下头部，和body，头部表示此次返回的一些配置，和请求配置一样，比如是否要长链接，哪种格式的数据返回等，body部分也就是数据部分就是具体返回的实际数据体了，我们发起请求想要的到的结果也就是这部分内容了。把约定的数据格式转换成我们想要的格式也就ok了，现在用的最多的也就是json转Java对象了，在AndroidStudio中又个插件JsonFormat，直接把返回的body体的Json字符串生成类，用Gson解析生成对象就可以了，非常方便，不属于本篇内容，有兴趣的可以自行google。</p>
