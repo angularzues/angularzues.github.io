@@ -18,14 +18,14 @@
 <meta property="og:description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
 
 首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
-<meta property="og:image" content="http://yoursite.com/Users/lishuangling/Desktop/http1.jpg">
-<meta property="og:updated_time" content="2017-03-06T03:54:32.000Z">
+<meta property="og:image" content="http://yoursite.com/Users/lishuangling/Documents/MyBlog/source/postImg/http1.jpg">
+<meta property="og:updated_time" content="2017-03-06T03:57:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈Http">
 <meta name="twitter:description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
 
 首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
-<meta name="twitter:image" content="http://yoursite.com/Users/lishuangling/Desktop/http1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/Users/lishuangling/Documents/MyBlog/source/postImg/http1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Angularzues" type="application/atom+xml">
   
@@ -203,7 +203,7 @@
 <p>http提供这几个方法给我们用，为了灵活性考虑，这些方法必然可以有各种各样的配置来应对各种不同的需求，不然http协议早就被淘汰了。比如有人想用json字符串传递参数和返回，有人想数据压缩传输，这些自然是应该被满足的。因为是约定，你怎样传输的，数据是什么格式，肯定要有个地方来说明。</p>
 </blockquote>
 <p>http中这些配置的说明都集中在头部，就是header，header里面包含了各种对本次http请求的配置，而一般http类的框架，多采用build模式来构建一个http请求，也正是因为http 请求的这么多配置，用build模式就比较方便，xxxBuilder.xx().xx().build。类似这种，就是一个个在配置相关的参数。其实这些配置无非是最后填在http协议的报文里面，作为一种标识，我们先来看http请求报文的结构。</p>
-<p><img src="/Users/lishuangling/Desktop/http1.jpg" alt=""></p>
+<p><img src="/Users/lishuangling/Documents/MyBlog/source/postImg/http1.jpg" alt=""></p>
 <p>请求行：请求行由方法字段、URL 字段 和HTTP 协议版本字段 3 个部分组成，他们之间使用空格隔开。</p>
 <p>请求头部：请求头部由关键字/值对组成，每行一对，关键字和值用英文冒号“:”分隔。请求头部通知服务器有关于客户端请求的信息，典型的请求头有：</p>
 <ul>
