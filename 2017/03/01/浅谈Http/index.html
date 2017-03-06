@@ -18,12 +18,14 @@
 <meta property="og:description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
 
 首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
-<meta property="og:updated_time" content="2017-02-28T18:06:21.000Z">
+<meta property="og:image" content="http://yoursite.com/Desktop/http1.jpg">
+<meta property="og:updated_time" content="2017-03-06T03:43:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈Http">
 <meta name="twitter:description" content="在Android开发中最经常见到的与服务器交互的方式就是通过Http请求了。我还是按照自己的理解来说明Http请求究竟是个什么东西。尽量不去堆砌名词，用最简单的语言就像科普一样给描述出来。
 
 首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输">
+<meta name="twitter:image" content="http://yoursite.com/Desktop/http1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Angularzues" type="application/atom+xml">
   
@@ -164,7 +166,117 @@
 </blockquote>
 <p>首先，Http是一种网络协议，协议这种东西就是约定好用来通信的嘛。通信协议无非就是通信双方对信息传输的约定，比如我要传个1，给你个高电平，传个0，就给你个低电平。尽管Http是应用层协议，它也是一种信息传输的约定，无非是比着0或1的编码更抽象罢了。我们要理解Http协议，首先要明白我们能用Http协议做什么，然后是哪些东西是Http这一层做的事。其实我一直觉的真正不容易懂的是http协议这一层到底包括哪些东西，什么get，post，head方法，无非就是一个规则，当我们知道http是什么之后，这些规则都简单的一笔。。。（我只写自己的理解，语言也没那么严密，感性认知，不喜勿喷）</p>
 <p>其实就像手机一样，我们可以用手机打电话，发短信，只要知道对方的号码，会拨号，或者编辑，然后打电话要打开拨号的软件，发短信要打开短信软件进行编辑。可以把Http协议的接口就抽象为一个手机，至于怎么发出去的，怎么听到声音的，怎么连接上的，这些不用我们管，在http这一层也无需理解。这样来看http，其实也就很简单了。既然我们用http来进行客户端和服务器的交互，就自然可以想到，我们是和服务器进行交换数据的。比如我要注册，必然要把注册的账号告诉服务器，让它存起来，它验证后觉得，符合注册要求，然后返回一个信息，说成功了，然后客户端再进行其他的操作。这样的信息交互无非就四种嘛，增删改查。</p>
-<p>同时我们来看http协议的各种请求，最常用的就是get方法和post方法了，为什么这两个最常用？因为get是对应数据的查，C／S模式下这种查不难理解吧，比如新闻客户端，一个页面那么多条新闻肯定要从服务器查询啊。每次刷新的时候去查一下服务器，然后服务器把结果取出来呈现在客户端界面上。post就对应是改数据的方法，客户端一般采集数据，更新服务端数据就用post方法。我觉得这样讲get和post的方法比说什么带不带body，格式什么的好理解吧。自然你想嘛，如果我要查，用get方法，只要知道路径就可以了，我自然就可以查到了，要post，改数据，总要知道你要改的字段是什么，你要更改为什么数据。所以post要放参数也就是这个原因了，就这么简单，我不知道为什么那些讲http请求的为什么老是搬书，上来就是定义，每次学一个新东西都很费劲。我觉得有这个理解，后面每一块是干嘛的其实很好理解的。</p>
+<p>同时我们来看http协议的各种请求，最常用的就是get方法和post方法了，为什么这两个最常用？因为get是对应数据的查，C／S模式下这种查不难理解吧，比如新闻客户端，一个页面那么多条新闻肯定要从服务器查询啊。每次刷新的时候去查一下服务器，然后服务器把结果取出来呈现在客户端界面上。post就对应是改数据的方法，客户端一般采集数据，更新服务端数据就用post方法。我觉得这样讲get和post的方法比说什么带不带body，格式什么的好理解吧。自然你想嘛，如果我要查，用get方法，只要知道路径，要查的字段就可以了，我自然就可以查到了，所需要的信息比较少，所以直接把参数放在url中就足够了。要用post，改数据，总要知道你要改的字段是什么，改可能牵涉一次改多个字段，比如改一篇文章，整片替换，那我都放url不是爆炸了。。。所以post一般以表单的形式提交，所以post要放参数，有数据body也就是这个原因了。就这么简单，我不知道为什么那些讲http请求的为什么老是搬书，上来就是定义，每次学一个新东西都很费劲。我觉得有这个理解，后面每一块是干嘛的其实很好理解的。</p>
+<p>get和post方法最大的区别也就在这儿了，get是向服务端查询数据的，post对应修改更新数据的。至于什么url长度限制，什么有没有body，这些是这种传输方式的规定而已，也就是相当于语法级别的。下面来看具体的语法层面的：</p>
+<blockquote>
+<p>HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。<br>HTTP1.1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT 方法。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>get</td>
+<td>从服务器获取指定资源，第一个参数之前有一个“?”，其他参数格式为：参数名=参数值，参数之间通过“&amp;”连接</td>
+</tr>
+<tr>
+<td>post</td>
+<td>修改服务器资源操作，常用来向服务器传递数据（URL指定要更改的资源的地址，body已key和value对应的形式指定要更新哪个字段，更新后的值是什么）</td>
+</tr>
+<tr>
+<td>put</td>
+<td>向服务器写入资源的方法，让服务器用请求主体部分来创建一个用请求URL命名的新文档。（也就是body部分是资源，URL部分是资源地址，然后用这个请求在服务器上添加这个资源）</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>删除请求URL所指定的资源，（参数都放在URL中，因为是删除，所有用不着body，一个URL足够指定要删除的目标资源</td>
+</tr>
+</tbody>
+</table>
+<p>一般移动开发用的着的也就这四个了，其他的不再列举，理解一个，其他的也就都理解了。</p>
+<blockquote>
+<p>http提供这几个方法给我们用，为了灵活性考虑，这些方法必然可以有各种各样的配置来应对各种不同的需求，不然http协议早就被淘汰了。比如有人想用json字符串传递参数和返回，有人想数据压缩传输，这些自然是应该被满足的。因为是约定，你怎样传输的，数据是什么格式，肯定要有个地方来说明。</p>
+</blockquote>
+<p>http中这些配置的说明都集中在头部，就是header，header里面包含了各种对本次http请求的配置，而一般http类的框架，多采用build模式来构建一个http请求，也正是因为http 请求的这么多配置，用build模式就比较方便，xxxBuilder.xx().xx().build。类似这种，就是一个个在配置相关的参数。其实这些配置无非是最后填在http协议的报文里面，作为一种标识，我们先来看http请求报文的结构。</p>
+<p><img src="Desktop/http1.jpg" alt=""></p>
+<p>请求行：请求行由方法字段、URL 字段 和HTTP 协议版本字段 3 个部分组成，他们之间使用空格隔开。</p>
+<p>请求头部：请求头部由关键字/值对组成，每行一对，关键字和值用英文冒号“:”分隔。请求头部通知服务器有关于客户端请求的信息，典型的请求头有：</p>
+<ul>
+<li>User-Agent：产生请求的客户端的信息，比如浏览器版本，操作系统，这个我们用不着，不用管;
+　　</li>
+<li><p>Date：发送请求的时间</p>
+</li>
+<li><p>Accept：客户端可识别的响应内容类型列表;星号 “ <em> ” 用于按范围将类型分组，用 “ </em>/<em> ” 指示可接受全部类型，用“ type/</em> ”指示可接受 type 类型的所有子类型;</p>
+</li>
+<li><p>Accept-Language：客户端可接受的自然语言;</p>
+</li>
+<li><p>Accept-Encoding：客户端可接受的编码压缩格式;</p>
+</li>
+<li><p>Accept-Charset：可接受的应答的字符集;
+　　</p>
+</li>
+<li><p>Content-Type：传输数据的类型</p>
+</li>
+<li><p>Host：请求的主机名，允许多个域名同处一个IP 地址，即虚拟主机;</p>
+</li>
+<li><p>connection：连接方式(close 或 keepalive);</p>
+</li>
+<li><p>Cookie：存储于客户端扩展字段，向同一域名的服务端发送属于该域的cookie;</p>
+<blockquote>
+<p>上面这些东西都是约定的东西，两边通信用的，这些我们有需要就配置，没需要就不用管。</p>
+</blockquote>
+</li>
+</ul>
+<p>空行：最后一个请求头之后是一个空行，发送回车符和换行符，通知服务器以下不再有请求头，这是通信编码里常用的方法，就是一个约定，看到空行就表示请求头结束;</p>
+<p>请求body：有些方法里有body，有些方法没有，原因就是需要不需要，仔细看都能理解;
+　　　</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方法</th>
+<th style="text-align:center">Request Has Body</th>
+<th style="text-align:center">Response Has Body</th>
+<th style="text-align:center">Safe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">GET</td>
+<td style="text-align:center">No</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td style="text-align:center">HEAD</td>
+</tr>
+<tr>
+<td style="text-align:center">PUT</td>
+</tr>
+<tr>
+<td style="text-align:center">DELETE</td>
+</tr>
+<tr>
+<td style="text-align:center">OPTIONS    </td>
+</tr>
+<tr>
+<td style="text-align:center">TRACE</td>
+</tr>
+<tr>
+<td style="text-align:center">POST</td>
+</tr>
+<tr>
+<td style="text-align:center">CONNECT</td>
+</tr>
+<tr>
+<td style="text-align:center">PATCH</td>
+</tr>
+</tbody>
+</table>
 
       
 
