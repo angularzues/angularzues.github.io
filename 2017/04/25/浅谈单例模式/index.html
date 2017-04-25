@@ -18,7 +18,7 @@
 单例模式的三个要点">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006tNc79ly1fez0gvqlx3j30qi0ap3zd.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/006tNc79ly1fez22zlb5mj30po0iw0t6.jpg">
-<meta property="og:updated_time" content="2017-04-25T12:22:14.000Z">
+<meta property="og:updated_time" content="2017-04-25T12:25:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈单例模式">
 <meta name="twitter:description" content="存在目的节约资源确保系统中某个类只有一个实例。（确保对象的唯一性，避免不必要的系统开销）
@@ -178,7 +178,7 @@
 <blockquote>
 <p>这是最简单的懒汉式，只有用到的时候才去判断有没有实例，但是这样  getInstance() 并不能在多线程时保证只创建出一个实例,可以修改为：</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public static LazySingleton getInstance() &#123;</div><div class="line">        if (instance == null)</div><div class="line">            synchronized (LazySingleton.class) &#123;</div><div class="line">                instance = new LazySingleton();</div><div class="line">            &#125;</div><div class="line">        return instance;</div><div class="line">&#125;  </div><div class="line"></div><div class="line">```                       &gt; 因为 判空和 new 对象的操作并不是原子操作，所以依然不能保证原自性，也就也可能，A、B 线程先后访问 instance 为 null，A 在 new  对象，而 B 在等锁，然后 B 又去 new 了一个实例。同样不能保证原子性。</div><div class="line">&gt; </div><div class="line">&gt; 而把整个 getInstance() 方法加锁来保证原子性的话，作为一个单例被各种其他类访问的第一步都是在 getInstance(),这样会在多线程的时候影响执行效率，所以又有了下面这种：</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public static LazySingleton getInstance() &#123;</div><div class="line">        if (instance == null)</div><div class="line">            synchronized (LazySingleton.class) &#123;</div><div class="line">                instance = new LazySingleton();</div><div class="line">            &#125;</div><div class="line">        return instance;</div><div class="line">&#125;  </div><div class="line"></div><div class="line">```  </div><div class="line">                     &gt; 因为 判空和 new 对象的操作并不是原子操作，所以依然不能保证原自性，也就也可能，A、B 线程先后访问 instance 为 null，A 在 new  对象，而 B 在等锁，然后 B 又去 new 了一个实例。同样不能保证原子性。</div><div class="line"> </div><div class="line">&gt; 而把整个 getInstance() 方法加锁来保证原子性的话，作为一个单例被各种其他类访问的第一步都是在 getInstance(),这样会在多线程的时候影响执行效率，所以又有了下面这种：</div></pre></td></tr></table></figure>
 <p>public class LazySingleton {</p>
 <pre><code>private static volatile LazySingleton instance = null;
 
@@ -194,7 +194,7 @@ public static LazySingleton getInstance() {
     return instance;
 }
 </code></pre><p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">&gt; 这样貌似就完美的解决了执行效率和实例唯一性的问题。但是需要注意到的一点是：必须在 instance 前面加修饰符 volatile 来确保多线程正确处理。</div><div class="line">&gt; </div><div class="line">&gt; 而 volatile 只有在 JDK 1.5 以及以上的版本才能正确执行。volatile 会屏蔽一些 Java 虚拟机的优化，而影响执行效率。可见上面这种双重判断锁定也不是一种完美的单例解决方案。</div><div class="line"></div><div class="line">#### 静态内部类实现单例（完美方案）</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&gt; 这样貌似就完美的解决了执行效率和实例唯一性的问题。但是需要注意到的一点是：必须在 instance 前面加修饰符 volatile 来确保多线程正确处理。</div><div class="line">&gt; </div><div class="line">&gt; 而 volatile 只有在 JDK 1.5 以及以上的版本才能正确执行。volatile 会屏蔽一些 Java 虚拟机的优化，而影响执行效率。可见上面这种双重判断锁定也不是一种完美的单例解决方案。</div><div class="line"></div><div class="line">#### 静态内部类实现单例（完美方案）</div></pre></td></tr></table></figure>
 <p>public class Singleton {</p>
 <pre><code>private Singleton() {
 }
