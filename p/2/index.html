@@ -136,6 +136,65 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Handler再一次回顾（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/19/Handler再一次回顾（二）/">Handler再一次回顾（二）</a>
+    </h1>
+  
+
+        <a href="/2016/12/19/Handler再一次回顾（二）/" class="archive-article-date">
+  	<time datetime="2016-12-19T09:38:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-19</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>在Handler再一次回顾里，我主要讲到了主线程在Looper的loop里循环读取消息，然后处理消息的过程，并没有说明这个消息是怎样发送的。这一篇我准备继续顺着线程执行的顺序来一步步看，怎样从发送消息到处理一个消息，以及消息究竟是个什么东西。</p>
+</blockquote>
+<p>在接着上一篇思路往下走之前，先说一点关于进程和APP的东西。多进程的东西在此不涉及，默认我们的APP只有一个进程，当点击APP图标，需要启动一个APP时，系统为我们用孵化出一个新进程，用来执行这个APP的代码。这个新进程里面的有个线程，就是我们的主线程，同时这个主线程和其他线程的区别就是有一个Looper和MessageQueue。简单来说就是：点击APP图标后系统为我们做的事就是孵化出一个进程，进程里有一个主线程，主线程里面有个Looper，MessageQueue，然后让执行到Looper的loop循环里。这个时候主线程就在这个loop里面跑循环，每次去取消息来处理了。</p>
+        
+          <a class="article-more-a" href="/2016/12/19/Handler再一次回顾（二）/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/19/Handler再一次回顾（二）/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-Handler再一次回顾" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
